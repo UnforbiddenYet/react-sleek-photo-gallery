@@ -208,6 +208,7 @@ $shadow-color: $grey;
 }
 
 $spinner-side: 10vh;
+$spinner-circles-center: $spinner-side * 0.25;
 
 .spinner {
   position: relative;
@@ -217,23 +218,27 @@ $spinner-side: 10vh;
   div {
     box-sizing: content-box;
     position: absolute;
-    top: $spinner-side / 2;
-    left: $spinner-side / 2;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: $spinner-side * 0.5;
+    height: $spinner-side * 0.5;
+    margin: auto;
     border-width: 10px;
     border-style: solid;
     opacity: 1;
     border-radius: 50%;
+    border-color: $background-dark;
     animation: ripple 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
   }
 
-  div:nth-child(1) {
-    border-color: $background-dark;
+  div:nth-child(2) {
+    animation-delay: -0.5s;
   }
 
-  div:nth-child(2) {
-    border-color: $background-dark;
-    -webkit-animation-delay: -0.5s;
-    animation-delay: -0.5s;
+  div:nth-child(3) {
+    animation-delay: -1s;
   }
 }
 
@@ -252,7 +257,7 @@ $spinner-side: 10vh;
     transform: scale(0);
   }
   100% {
-    transform: scale(2);
+    transform: scale(1);
     opacity: 0;
   }
 }

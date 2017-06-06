@@ -93,6 +93,21 @@ module.exports = {
           })
         )
       },
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'img-loader',
+            options: {
+              mozjpeg: {
+                progressive: true,
+                arithmetic: false
+              }
+            }
+          }
+        ]
+      }
     ],
   },
 
