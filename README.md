@@ -50,7 +50,7 @@ export default function ExampleApp() {
   ];
 
   return (
-	  <Gallery images={PHOTOS} />
-	);
+    <Gallery images={PHOTOS} />
+  );
 }
 ```
