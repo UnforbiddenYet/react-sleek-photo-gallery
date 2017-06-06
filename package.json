@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --env=demo",
     "build:demo": "NODE_ENV=production webpack --env=demo",
     "build": "NODE_ENV=production webpack --env=build",
-    "prepublishOnly": "npm run build && npm run build:demo && surge"
+    "publish": "npm run build && npm run build:demo && npm publish && surge"
   },
   "author": "UnforbiddenYet",
   "license": "MIT",

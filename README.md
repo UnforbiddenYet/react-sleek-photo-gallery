@@ -20,7 +20,7 @@ npm install --save react-sleek-photo-gallery
 
 ## Demo
 
-[Full-screen photo gallery (photos taken by me)](react-sleek-photo-gallery.surge.sh)
+[Full-screen photo gallery (photos taken by me)](https://react-sleek-photo-gallery.surge.sh)
 
 
 ## Local build
