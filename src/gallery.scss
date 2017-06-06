@@ -1,0 +1,258 @@
+@import '~sass-mq';
+
+$mq-breakpoints: (
+  mobile:  320px,
+  tablet:  740px,
+  desktop: 980px,
+  wide:    1300px
+);
+
+// Thumbnails
+$thumbnail-image-height: 70px;
+$active-thumbnail-spacing: 2px;
+
+$thumbnails-container-height: $thumbnail-image-height + $active-thumbnail-spacing * 2;
+$thumbnails-box-shadow-height: $thumbnails-container-height * 0.5;
+
+// Presentation image
+$image-max-height: 100%;
+
+// Buttons
+$arrowed-buttons-side-offset: 2.5vw;
+$arrowed-buttons-side-offset-hovered: $arrowed-buttons-side-offset * 0.5;
+
+// Colors
+$white: #f8f6f4;
+$grey: #6c6a68;
+$orange: #c0a064;
+$dark: #2c2a28;
+$background: $white;
+$background-dark: $dark;
+$thumbnail-offset-color: rgba(255, 255, 255, 0.4);
+$shadow-color: $grey;
+
+// Mixins and custom functions
+@mixin button-linear-gradient($direction) {
+  background: linear-gradient($direction, rgba($white, 0), rgba($white, 0.1));
+}
+
+@mixin styled-navigation-buttons($direction) {
+  text-align: $direction;
+
+  span {
+    transform: translateX(get-multiplier($direction) * $arrowed-buttons-side-offset);
+  }
+
+  &:hover {
+    @include button-linear-gradient(to $direction);
+
+    span {
+      transform: translateX(get-multiplier($direction) * $arrowed-buttons-side-offset-hovered);
+    }
+  }
+}
+
+@function get-multiplier($direction) {
+  @if $direction == 'right' {
+    @return -1;
+  }
+  @return 1;
+}
+
+.gallery {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $background;
+  transition: background 500ms ease-out;
+
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
+  &.presentation-mode {
+    background-color: $background-dark;
+
+    button:hover {
+      color: $white;
+    }
+  }
+
+  .presentation {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
+
+  .image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  .image {
+    max-height: $image-max-height;
+    max-width: 90%;
+    width: auto;
+    margin: 0px auto;
+    animation: fadein 1s;
+
+    @include mq($until: desktop) {
+      max-width: 100%;
+    }
+  }
+
+  .scroller {
+    display: flex;
+    align-items: center;
+    height: $thumbnails-container-height;
+    transition: transform 200ms ease-out;
+  }
+
+  .thumbnails {
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: $thumbnails-container-height;
+    background: linear-gradient(to bottom, rgba($background, 0.05), $background);
+    color: $dark;
+    opacity: 1;
+    transition: opacity 300ms ease-out;
+
+    &.inactive {
+      opacity: 0;
+      transform: translateY($thumbnails-container-height);
+    }
+
+    &.active-swipe {
+      transition-duration: 50ms;
+    }
+
+    &.loading {
+      display: flex;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+      color: $grey;
+      opacity: 0.5;
+    }
+  }
+
+  .thumbnail {
+    height: $thumbnails-container-height;
+    width: 100px;
+    background-size: cover;
+    background-position: 50%;
+    margin: $active-thumbnail-spacing;
+    box-shadow: inset 0 0 0 $thumbnails-box-shadow-height $thumbnail-offset-color;
+    cursor: pointer;
+    transition: transform 500ms ease-out;
+    animation: fadein 1.5s ease-out;
+
+    &:hover, &.active {
+      box-shadow: none;
+    }
+  }
+
+  .controls {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    button {
+      border: 0;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      width: 20vw;
+      background: none;
+      color: $dark;
+      font-size: 2em;
+      opacity: 0.5;
+      outline: 0;
+      cursor: pointer;
+      transition: 500ms ease-out;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &:active * {
+        color: $orange;
+      }
+
+      span {
+        display: inline-block;
+        transition: transform 300ms ease-out;
+      }
+
+      &:first-child {
+        @include styled-navigation-buttons(left);
+      }
+
+      &:last-child {
+        @include styled-navigation-buttons(right);
+      }
+    }
+  }
+}
+
+$spinner-side: 10vh;
+
+.spinner {
+  position: relative;
+  width: $spinner-side;
+  height: $spinner-side;
+
+  div {
+    box-sizing: content-box;
+    position: absolute;
+    top: $spinner-side / 2;
+    left: $spinner-side / 2;
+    border-width: 10px;
+    border-style: solid;
+    opacity: 1;
+    border-radius: 50%;
+    animation: ripple 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
+
+  div:nth-child(1) {
+    border-color: $background-dark;
+  }
+
+  div:nth-child(2) {
+    border-color: $background-dark;
+    -webkit-animation-delay: -0.5s;
+    animation-delay: -0.5s;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
