@@ -49,8 +49,8 @@ export default function ExampleApp() {
     'http://example.com/example/img6.jpg'
   ];
 
-	return (
-	   <Gallery images={PHOTOS} />
+  return (
+	  <Gallery images={PHOTOS} />
 	);
 }
 ```
