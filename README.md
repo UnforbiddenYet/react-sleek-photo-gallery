@@ -38,6 +38,7 @@ Then open [`localhost:8080`](http://localhost:8080) in a browser.
 ```jsx
 import React from 'react';
 import Gallery from 'react-sleek-photo-gallery';
+import styles from 'react-sleek-photo-gallery/dist/style.css';
 
 export default function ExampleApp() {
   const PHOTOS = [
