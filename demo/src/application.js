@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Gallery from '../../src/components/gallery';
+import Gallery from '../../src/index';
 
 const images = [
   'https://s20.postimg.org/jpw9aousd/865073ff66a6b7cd75f082c914d792de.jpg',
@@ -20,6 +20,6 @@ const images = [
 ];
 
 
-const Application = () => <Gallery images={images} />;
+const Application = () => <Gallery images={images} thumbnailHeight={80} />;
 
 export default Application;

@@ -40,11 +40,24 @@ export default class Preloader extends Component {
         }, () => {
           Promise.all(restImageUrls.map(imageLoader)).then(() => {
             this.setState({
-              loadedImages
+              loadedImages: this.resize(loadedImages)
             });
           });
         });
       });
+  }
+
+  resize(images) {
+    const { maxThumbnailHeight, maxThumbnailWidth } = this.props;
+
+    if (maxThumbnailHeight || maxThumbnailWidth) {
+      return images.map(i => {
+        i.setThumbnailSize({ width: maxThumbnailWidth, height: maxThumbnailHeight });
+        return i;
+      })
+    }
+
+    return images;
   }
 
   render() {

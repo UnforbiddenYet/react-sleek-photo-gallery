@@ -3,20 +3,28 @@ import ContainerDimensions from 'react-container-dimensions';
 import classNames from 'classnames';
 
 import Scroller from './scroller';
+import Spinner from './spinner';
 
-function Thumbnail({ image, active, onClick }) {
+const OVERLAY_COLOR = 'rgba(255, 255, 255, 0.4)';
+
+function Thumbnail({ image, active, height, onClick }) {
   const url = image.src || image;
+
+  const backgroundImage = `url(${url})`;
+  const activeBgGradient = `linear-gradient(${OVERLAY_COLOR}, ${OVERLAY_COLOR})`;
+
   const styles = {
-    backgroundImage: `url(${url})`,
-    width: image.thumbnailWidth
+    backgroundImage: active ? backgroundImage : `${activeBgGradient}, ${backgroundImage}`,
+    width: image.thumbnailWidth,
+    height: image.thumbnailHeight
   };
 
   return (
     <div
-      className={classNames('thumbnail', { active })}
+      className='thumbnail'
       onClick={onClick}
       style={styles}
-    ></div>
+    />
   )
 }
 
@@ -24,9 +32,10 @@ export default function Thumbnails({
   images,
   activeImageIndex,
   disabled,
-  onThumbnailClick,
+  thumbnailHeight,
+  onThumbnailClick
 }) {
-  if (images === null) return null;
+  if (images === null) return <Spinner/>;
 
   const className = classNames('thumbnails', {
     inactive: disabled
@@ -38,6 +47,7 @@ export default function Thumbnails({
       image={d}
       onClick={() => onThumbnailClick(index)}
       active={activeImageIndex === index}
+      height={thumbnailHeight}
     />)
   );
 

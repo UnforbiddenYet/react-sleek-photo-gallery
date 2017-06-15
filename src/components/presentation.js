@@ -37,11 +37,12 @@ class Presentation extends PureComponent {
       activeImage,
       disabledDirections,
       enabledArrowsWhenWidth,
+      height,
       onImageClick
     } = this.props;
 
     return (
-      <div className='presentation'>
+      <div className='presentation' style={{ height }}>
         <MediaQuery minDeviceWidth={enabledArrowsWhenWidth || config.TABLET_BREAKEPOINT}>
           {activeImage ? <ImageControls
             handleLeftButtonClick={this.leftDirection}

@@ -6,7 +6,7 @@ module.exports = {
   context: resolve(__dirname, 'src'),
 
   entry: [
-    './components/gallery.js'
+    './index.js'
   ],
 
   output: {

@@ -13,23 +13,9 @@ $grey: #6c6a68;
 $orange: #c0a064;
 $dark: #2c2a28;
 $background: $dark;
-$background-dark: $dark;
-$thumbnail-offset-color: rgba(255, 255, 255, 0.4);
 $shadow-color: $grey;
 
-
-// Thumbnail
-$thumbnail-image-height: 70px;
-$thumbnail-spacing: 2.5px;
-$thumbnail-container-height: $thumbnail-image-height + $thumbnail-spacing * 2;
-$thumbnail-box-shadow-height: $thumbnail-container-height * 0.5;
-
-// Thumbnails
-$thumbnails-container-spacing: 5px;
-$thumbnails-container-height: $thumbnail-container-height + $thumbnails-container-spacing * 2;
-
-// Presentation image
-$image-max-height: 100%;
+$overlay-color: rgba(255, 255, 255, 0.4);
 
 // Buttons
 $arrowed-buttons-side-offset: 2.5vw;
@@ -68,32 +54,18 @@ $spinner-color: $grey;
   @return 1;
 }
 
-.gallery {
+.gallery, .presentation {
   position: relative;
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
+}
+
+.gallery {
   background-color: $background;
   transition: background 500ms ease-out;
 
   *, *:before, *:after {
     box-sizing: border-box;
-  }
-
-  &.presentation-mode {
-    background-color: $background-dark;
-
-    button:hover {
-      color: $white;
-    }
-  }
-
-  .presentation {
-    flex: 1;
-    position: relative;
-    height: 100%;
-    width: 100%;
   }
 
   .image-wrapper {
@@ -104,7 +76,7 @@ $spinner-color: $grey;
   }
 
   .image {
-    max-height: $image-max-height;
+    max-height: 90%;
     max-width: 90%;
     width: auto;
     margin: 0px auto;
@@ -123,12 +95,6 @@ $spinner-color: $grey;
 
   .thumbnails {
     overflow: hidden;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: $thumbnails-container-height;
-    padding: $thumbnails-container-spacing;
     background: linear-gradient(to bottom, rgba($background, 0.05), $background);
     color: $dark;
     opacity: 1;
@@ -136,42 +102,20 @@ $spinner-color: $grey;
 
     &.inactive {
       opacity: 0;
-      animation: infront-animation 500ms ease-out;
-    }
-
-    &.active-swipe {
-      transition-duration: 50ms;
-    }
-
-    &.loading {
-      display: flex;
-      justify-content: center;
-      text-align: center;
-      align-items: center;
-      color: $grey;
-      opacity: 0.5;
     }
   }
 
   .thumbnail {
-    height: $thumbnail-container-height;
-    width: 100px;
+    height: 70px;
+    width: 70px;
+    margin: 0 5px;
     background-size: cover;
     background-position: 50%;
-    margin: 0 $thumbnail-spacing;
-    box-shadow: inset 0 0 0 $thumbnail-box-shadow-height $thumbnail-offset-color;
+    background-repeat: no-repeat;
     cursor: pointer;
     transition: transform 500ms ease-out;
     animation: fadein 1.5s ease-out;
-
-    &:hover, &.active {
-      box-shadow: none;
-    }
-
-    &.active {
-      border: $thumbnail-spacing solid $orange;
-    }
-  }
+}
 
   .controls {
     position: absolute;
@@ -189,7 +133,7 @@ $spinner-color: $grey;
       padding: 0;
       width: 20vw;
       background: none;
-      color: $dark;
+      color: $white;
       font-size: 2em;
       opacity: 0.5;
       outline: 0;
@@ -269,19 +213,5 @@ $spinner-color: $grey;
   100% {
     transform: scale(1);
     opacity: 0;
-  }
-}
-
-@keyframes infront-animation {
-  0% {
-    opacity: 1;
-  }
-  99.9% {
-    opacity: 0;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY($thumbnails-container-height);
   }
 }
