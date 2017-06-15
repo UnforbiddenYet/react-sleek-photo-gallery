@@ -104,18 +104,20 @@ class Scroller extends Component {
   }
 
   render() {
-    const { containerWidth, thumbnails, children } = this.props;
-
+    const { containerWidth, className, thumbnails, children } = this.props;
+    const scrollerWidth = thumbnails.reduce(thumbnailWidthReducer, 0);
+    console.log('scrollerWidth', scrollerWidth)
     return (
       <div
         ref={e => { this.root = e; }}
+        className={className}
         style={{ width: containerWidth }}
       >
         <div
           className='scroller'
           style={{
             [transformProperty.js]: `translate3d(${this.state.scrollerTranslateX}px, 0, 0)`,
-            width: thumbnails.reduce(thumbnailWidthReducer, 0)
+            width: scrollerWidth
           }}
           ref={e => {this.el = e;}}
         >

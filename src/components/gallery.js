@@ -3,50 +3,32 @@ import classNames from 'classnames';
 
 import Presentation from './presentation';
 import Thumbnails from './thumbnails';
+import Preloader from './preloader';
+
 import config from '../config';
-import { makeImageInstanceAndLoad, getNextIndexBasedOnDirection, isInteger } from '../utils/helpers';
+import { getNextIndexBasedOnDirection, isInteger } from '../utils/helpers';
 import styles from '../gallery.scss';
+
+export default function GalleryApp ({ images }) {
+  return (
+    <Preloader images={images}>
+      {loadedImages => <Gallery images={images} loadedImages={loadedImages}/>}
+    </Preloader>
+  )
+}
 
 class Gallery extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeImageIndex: null,
-      loadedImages: []
+      activeImageIndex: 0,
+      presentationMode: null
     };
   }
 
-  componentWillMount() {
-    this.prefetchImages(this.props.images);
-  }
-
-  prefetchImages(imageUrls) {
-    let loadedImages = [];
-
-    function imageLoader(url) {
-      return makeImageInstanceAndLoad(url, loadedImages);
-    }
-
-    const firstImageUrl = imageUrls[0];
-    const restImageUrls = imageUrls.slice(1);
-
-    imageLoader(firstImageUrl)
-      .then(() => {
-        this.setState({
-          activeImageIndex: 0,
-          loadedImages
-        }, () => {
-          Promise.all(restImageUrls.map(imageLoader)).then(() => {
-            this.setState({
-              loadedImages
-            });
-          });
-        });
-      });
-  }
-
   handleDirectionChange = (direction) => {
-    const { activeImageIndex, loadedImages } = this.state;
+    const { activeImageIndex } = this.state;
+    const { loadedImages } = this.props;
     const newActiveImageIndex = getNextIndexBasedOnDirection(loadedImages, activeImageIndex, direction);
     isInteger(newActiveImageIndex) && this.setState({ activeImageIndex: newActiveImageIndex });
   }
@@ -60,13 +42,12 @@ class Gallery extends Component {
   }
 
   render() {
-    const { activeImageIndex, loadedImages, presentationMode } = this.state;
-    const { images } = this.props;
-
-    const activeImage = loadedImages.length && loadedImages[activeImageIndex];
-    const thumbnails = loadedImages.length === images.length ? loadedImages : null;
+    const { activeImageIndex, presentationMode } = this.state;
+    const { images, loadedImages } = this.props;
 
     const className = classNames('gallery', { 'presentation-mode' : presentationMode });
+    const activeImage = loadedImages.length && loadedImages[activeImageIndex];
+    const thumbnails = loadedImages.length === images.length ? loadedImages : null;
 
     return (
       <div className={className}>
@@ -80,6 +61,7 @@ class Gallery extends Component {
           onDirectionChange={this.handleDirectionChange}
         />
         <Thumbnails
+          thumbnaiHeight={this.props.thumbhailHeight}
           disabled={presentationMode}
           images={thumbnails}
           onThumbnailClick={this.handleThumbnailClick}
@@ -89,5 +71,3 @@ class Gallery extends Component {
     )
   }
 }
-
-export default Gallery;

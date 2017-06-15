@@ -20,7 +20,7 @@ function Thumbnail({ image, active, onClick }) {
   )
 }
 
-export default function Thumbnails ({
+export default function Thumbnails({
   images,
   activeImageIndex,
   disabled,
@@ -42,19 +42,18 @@ export default function Thumbnails ({
   );
 
   return (
-    <div className={className}>
-      <ContainerDimensions>
-        { ({ width }) =>
-          (<Scroller
-            containerWidth={width}
-            thumbnails={images.map(i => i.thumbnailWidth)}
-            activeThumbnailIndex={activeImageIndex}
-            velocityX={1.5}
-          >
-            {thumbnails}
-          </Scroller>)
-        }
-      </ContainerDimensions>
-    </div>
+    <ContainerDimensions>
+      { ({ width }) =>
+        (<Scroller
+          className={className}
+          containerWidth={width}
+          thumbnails={images.map(i => i.thumbnailWidth)}
+          activeThumbnailIndex={activeImageIndex}
+          velocityX={1.5}
+        >
+          {thumbnails}
+        </Scroller>)
+      }
+    </ContainerDimensions>
   );
 }

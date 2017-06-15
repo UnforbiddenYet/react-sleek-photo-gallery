@@ -1,7 +1,5 @@
-import config from '../config';
-
 export default class FancyImage {
-  constructor(src) {
+  constructor(src, scale = {}) {
     this.src = src;
     this.image = null;
   }
@@ -11,20 +9,23 @@ export default class FancyImage {
       this.image = new Image();
       this.image.onload = () => {
         resolve(this.image);
-        this.setDimensions();
       };
       this.image.src = this.src;
     });
   }
 
-  newSizeWithRatio(sizes = {}) {
-    let { width, height } = sizes;
+  newSizeWithRatio() {
+    let width = this.thumbnailScaledWidth;
+    let height = this.thumbnailScaledHeight;
+
+    if (!width && !height) return {};
+
     const imageWidth = this.image.width;
     const imageHeight = this.image.height;
 
     if (width) {
       const ratio = imageWidth / width;
-      height = imageHeight / ratio;
+      height = Math.round(imageHeight / ratio);
     } else if (height) {
       const ratio = imageHeight / height;
       width = Math.round(imageWidth / ratio);
@@ -35,10 +36,11 @@ export default class FancyImage {
 
 
   setDimensions() {
-    const { width, height } = this.newSizeWithRatio({ height: config.MAX_THUMBNAILS_HEIGHT });
+    const { width, height } = this.newSizeWithRatio();
+
     this.width = this.image.naturalWidth;
     this.height = this.image.naturalHeight;
-    this.thumbnailWidth = width;
-    this.thumbnailHeight = height;
+    this.thumbnailWidth = width || this.width;
+    this.thumbnailHeight = height || this.height;
   }
 }

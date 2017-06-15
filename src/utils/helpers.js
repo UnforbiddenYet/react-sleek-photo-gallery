@@ -1,14 +1,7 @@
 import config from '../config';
-import FancyImage from './fancy-image';
 
 export function thumbnailWidthReducer(acc, w) {
-  return acc + w + (config.THUMBNAIL_PADDING * 2);
-}
-
-export function makeImageInstanceAndLoad(iUrl, loadedImages = []) {
-  const i = new FancyImage(iUrl);
-  loadedImages.push(i);
-  return i.load();
+  return acc + w + (config.THUMBNAIL_PADDING_HORIZONTAL * 2);
 }
 
 export function getNextIndexBasedOnDirection(items = [], currentIndex, direction) {

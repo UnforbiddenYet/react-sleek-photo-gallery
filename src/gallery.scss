@@ -7,12 +7,26 @@ $mq-breakpoints: (
   wide:    1300px
 );
 
-// Thumbnails
-$thumbnail-image-height: 70px;
-$active-thumbnail-spacing: 2px;
+// Colors
+$white: #f8f6f4;
+$grey: #6c6a68;
+$orange: #c0a064;
+$dark: #2c2a28;
+$background: $dark;
+$background-dark: $dark;
+$thumbnail-offset-color: rgba(255, 255, 255, 0.4);
+$shadow-color: $grey;
 
-$thumbnails-container-height: $thumbnail-image-height + $active-thumbnail-spacing * 2;
-$thumbnails-box-shadow-height: $thumbnails-container-height * 0.5;
+
+// Thumbnail
+$thumbnail-image-height: 70px;
+$thumbnail-spacing: 2.5px;
+$thumbnail-container-height: $thumbnail-image-height + $thumbnail-spacing * 2;
+$thumbnail-box-shadow-height: $thumbnail-container-height * 0.5;
+
+// Thumbnails
+$thumbnails-container-spacing: 5px;
+$thumbnails-container-height: $thumbnail-container-height + $thumbnails-container-spacing * 2;
 
 // Presentation image
 $image-max-height: 100%;
@@ -21,15 +35,10 @@ $image-max-height: 100%;
 $arrowed-buttons-side-offset: 2.5vw;
 $arrowed-buttons-side-offset-hovered: $arrowed-buttons-side-offset * 0.5;
 
-// Colors
-$white: #f8f6f4;
-$grey: #6c6a68;
-$orange: #c0a064;
-$dark: #2c2a28;
-$background: $white;
-$background-dark: $dark;
-$thumbnail-offset-color: rgba(255, 255, 255, 0.4);
-$shadow-color: $grey;
+// Spinner
+$spinner-dimension: 10vh;
+$spinner-circles-center: $spinner-dimension * 0.25;
+$spinner-color: $grey;
 
 // Mixins and custom functions
 @mixin button-linear-gradient($direction) {
@@ -109,7 +118,6 @@ $shadow-color: $grey;
   .scroller {
     display: flex;
     align-items: center;
-    height: $thumbnails-container-height;
     transition: transform 200ms ease-out;
   }
 
@@ -120,6 +128,7 @@ $shadow-color: $grey;
     bottom: 0;
     left: 0;
     height: $thumbnails-container-height;
+    padding: $thumbnails-container-spacing;
     background: linear-gradient(to bottom, rgba($background, 0.05), $background);
     color: $dark;
     opacity: 1;
@@ -127,7 +136,7 @@ $shadow-color: $grey;
 
     &.inactive {
       opacity: 0;
-      transform: translateY($thumbnails-container-height);
+      animation: infront-animation 500ms ease-out;
     }
 
     &.active-swipe {
@@ -145,18 +154,22 @@ $shadow-color: $grey;
   }
 
   .thumbnail {
-    height: $thumbnails-container-height;
+    height: $thumbnail-container-height;
     width: 100px;
     background-size: cover;
     background-position: 50%;
-    margin: $active-thumbnail-spacing;
-    box-shadow: inset 0 0 0 $thumbnails-box-shadow-height $thumbnail-offset-color;
+    margin: 0 $thumbnail-spacing;
+    box-shadow: inset 0 0 0 $thumbnail-box-shadow-height $thumbnail-offset-color;
     cursor: pointer;
     transition: transform 500ms ease-out;
     animation: fadein 1.5s ease-out;
 
     &:hover, &.active {
       box-shadow: none;
+    }
+
+    &.active {
+      border: $thumbnail-spacing solid $orange;
     }
   }
 
@@ -207,13 +220,10 @@ $shadow-color: $grey;
   }
 }
 
-$spinner-side: 10vh;
-$spinner-circles-center: $spinner-side * 0.25;
-
 .spinner {
   position: relative;
-  width: $spinner-side;
-  height: $spinner-side;
+  width: $spinner-dimension;
+  height: $spinner-dimension;
 
   div {
     box-sizing: content-box;
@@ -222,14 +232,14 @@ $spinner-circles-center: $spinner-side * 0.25;
     bottom: 0;
     left: 0;
     right: 0;
-    width: $spinner-side * 0.5;
-    height: $spinner-side * 0.5;
+    width: $spinner-dimension * 0.5;
+    height: $spinner-dimension * 0.5;
     margin: auto;
     border-width: 10px;
     border-style: solid;
     opacity: 1;
     border-radius: 50%;
-    border-color: $background-dark;
+    border-color: $spinner-color;
     animation: ripple 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
   }
 
@@ -259,5 +269,19 @@ $spinner-circles-center: $spinner-side * 0.25;
   100% {
     transform: scale(1);
     opacity: 0;
+  }
+}
+
+@keyframes infront-animation {
+  0% {
+    opacity: 1;
+  }
+  99.9% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY($thumbnails-container-height);
   }
 }
