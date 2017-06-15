@@ -55,3 +55,9 @@ export default function ExampleApp() {
   );
 }
 ```
+
+## Roadmap
+- Replace the arrows with SVG icons
+- Add customisable thumbnail overlay
+- Fix spinner in Thumbnails component
+- Add image change animation to the Image component
