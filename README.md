@@ -1,4 +1,4 @@
-# Responsive Photo Gallery that supports mobile gestures. For React
+# A beautiful photo gallery with mobile gestures support. For React
 Inspired by Apple Photos
 
 ## Features
