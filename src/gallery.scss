@@ -69,9 +69,6 @@ $spinner-color: $grey;
   }
 
   .image-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100%;
   }
 
@@ -88,8 +85,6 @@ $spinner-color: $grey;
   }
 
   .scroller {
-    display: flex;
-    align-items: center;
     transition: transform 200ms ease-out;
   }
 
@@ -194,6 +189,12 @@ $spinner-color: $grey;
   div:nth-child(3) {
     animation-delay: -1s;
   }
+}
+
+.center-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes fadein {
