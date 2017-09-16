@@ -6,7 +6,12 @@ import Swipe from './swipe';
 import ImageComponent from './image';
 import config from '../config';
 
-function ImageControls({ disabledDirections, handleLeftButtonClick, handleRightButtonClick, handleImageClick}) {
+function ImageControls({
+  disabledDirections,
+  handleLeftButtonClick,
+  handleRightButtonClick,
+  handleImageClick
+}) {
   return (
     <div className='controls' onClick={handleImageClick}>
       {disabledDirections.backward ? <div></div> : <button onClick={handleLeftButtonClick}>
@@ -23,13 +28,13 @@ class Presentation extends PureComponent {
   leftDirection = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    this.props.onDirectionChange && this.props.onDirectionChange(config.DIRECTION_BACKWARD);
+    if (this.props.onDirectionChange) this.props.onDirectionChange(config.DIRECTION_BACKWARD);
   }
 
   rightDirection = (event) => {
     event.preventDefault();
     event.stopPropagation();
-    this.props.onDirectionChange && this.props.onDirectionChange(config.DIRECTION_FORWARD);
+    if (this.props.onDirectionChange) this.props.onDirectionChange(config.DIRECTION_FORWARD);
   }
 
   render() {
@@ -52,7 +57,7 @@ class Presentation extends PureComponent {
           /> : null}
         </MediaQuery>
         <Swipe
-          className='image-wrapper'
+          className='image-wrapper center-flex'
           onClick={onImageClick}
           onSwipedLeft={this.rightDirection}
           onSwipedRight={this.leftDirection}
@@ -62,6 +67,6 @@ class Presentation extends PureComponent {
       </div>
     );
   }
-};
+}
 
 export default Presentation;

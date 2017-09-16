@@ -15,8 +15,8 @@ function Thumbnail({ image, active, height, onClick }) {
 
   const styles = {
     backgroundImage: active ? backgroundImage : `${activeBgGradient}, ${backgroundImage}`,
-    width: image.thumbnailWidth,
-    height: image.thumbnailHeight
+    width: `${image.thumbnailWidth}px`,
+    height: `${image.thumbnailHeight}px`
   };
 
   return (
@@ -35,7 +35,11 @@ export default function Thumbnails({
   thumbnailHeight,
   onThumbnailClick
 }) {
-  if (images === null) return <Spinner/>;
+  if (images === null) return (
+    <div className='center-flex'>
+      <Spinner />
+    </div>
+  );
 
   const className = classNames('thumbnails', {
     inactive: disabled

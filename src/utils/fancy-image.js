@@ -33,8 +33,8 @@ export default class FancyImage {
       }
     }
 
-    this.thumbnailHeight = height;
-    this.thumbnailWidth = width;
+    this.thumbnailHeight = parseInt(height, 10);
+    this.thumbnailWidth = parseInt(width, 10);
 
     return { width, height };
   }

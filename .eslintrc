@@ -1,13 +1,15 @@
 {
-  "extends": "airbnb",
-  "plugins": ["react"],
-  "env": {
-    "browser": true,
-    "node": true,
-    "es6": true
+  extends: 'airbnb',
+  parser: 'babel-eslint',
+  plugins: ['import', 'jsx-a11y','react'],
+  env: {
+    browser: true,
+    node: true,
+    es6: true
   },
-  "rulses": {
-    "jsx-quotes": ["error", "prefer-single"],
-    "comma-dangle": ["error", "never"]
+  rules: {
+    'comma-dangle': ['error', 'never'],
+    'jsx-quotes': ['error', 'prefer-single'],
+    'react/jsx-filename-extension': [1, { "extensions": [".js", ".jsx"] }]
   }
 }

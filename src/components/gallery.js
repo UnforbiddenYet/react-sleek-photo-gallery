@@ -55,7 +55,7 @@ export default class Gallery extends Component {
           images={thumbnails}
           onThumbnailClick={this.handleThumbnailClick}
           activeImageIndex={activeImageIndex}
-          thumbnailHeight={thumbnailHeight}
+          thumbnailHeight={parseInt(thumbnailHeight, 10)}
         />
       </div>
     )

@@ -8,7 +8,7 @@ function ImageComponent({ image }) {
   if (!src) return <Spinner/>;
 
   return (
-    <img className='image' src={src} />
+    <img className='image' src={src} alt=''/>
   );
 }
 

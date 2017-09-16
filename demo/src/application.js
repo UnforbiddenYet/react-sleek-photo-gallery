@@ -20,6 +20,6 @@ const images = [
 ];
 
 
-const Application = () => <Gallery images={images} thumbnailHeight={80} />;
+const Application = () => <Gallery images={images} thumbnailHeight="100" />;
 
 export default Application;

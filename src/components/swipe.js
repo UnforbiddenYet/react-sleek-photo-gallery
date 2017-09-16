@@ -21,10 +21,10 @@ class Swipe extends Component {
 
       if (!swipeDirection) return;
 
-      if (swipeDirection === config.DIRECTION_BACKWARD) {
-        this.props.onSwipedLeft && this.props.onSwipedLeft(event, getTouchXPosition(event));
-      } else if (swipeDirection === config.DIRECTION_FORWARD) {
-        this.props.onSwipedRight && this.props.onSwipedRight(event, getTouchXPosition(event));
+      if (swipeDirection === config.DIRECTION_BACKWARD && this.props.onSwipedLeft) {
+        this.props.onSwipedLeft(event, getTouchXPosition(event));
+      } else if (swipeDirection === config.DIRECTION_FORWARD && this.props.onSwipedRight) {
+        this.props.onSwipedRight(event, getTouchXPosition(event));
       }
 
       this.swiped = true;
@@ -34,13 +34,13 @@ class Swipe extends Component {
   onMoveStart = (event) => {
     this.moving = true;
     this.startPositionX = getTouchXPosition(event);
-    this.props.onSwipeStart && this.props.onSwipeStart();
+    if (this.props.onSwipeStart) this.props.onSwipeStart();
   }
 
   onMoveEnd = (event) => {
     this.moving = false;
     this.swiped = false;
-    this.props.onSwipeEnd && this.props.onSwipeEnd();
+    if (this.props.onSwipeEnd) this.props.onSwipeEnd();
   }
 
   render() {
@@ -55,8 +55,7 @@ class Swipe extends Component {
       >
         {children}
       </div>
-
-    )
+    );
   }
 }
 

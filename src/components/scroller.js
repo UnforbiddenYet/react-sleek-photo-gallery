@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import classNames from 'classnames';
-import throttle from 'throttle-debounce/throttle'
+import throttle from 'throttle-debounce/throttle';
 
-import Swipe from './swipe';
 import getSupportedTransformProperty from '../utils/get-supported-translate-property';
 import { getTouchXPosition, calculateTranslateX, calculateEdgeTranslateXDistances, thumbnailWidthReducer } from '../utils/helpers';
-import config from '../config';
 
 const transformProperty = getSupportedTransformProperty();
 
@@ -40,12 +36,6 @@ class Scroller extends Component {
     this.root.addEventListener('touchmove', this.handleTouchMove);
   }
 
-  componentWillUnmount() {
-    this.root.removeEventListener('wheel', this.handleWheel);
-    this.root.removeEventListener('touchstart', this.handleTouchStart);
-    this.root.removeEventListener('touchmove', this.handleTouchMove);
-  }
-
   componentWillReceiveProps(newProps) {
     const state = {};
     const {
@@ -68,6 +58,12 @@ class Scroller extends Component {
     }
 
     Object.keys(state) && this.setState(state);
+  }
+
+  componentWillUnmount() {
+    this.root.removeEventListener('wheel', this.handleWheel);
+    this.root.removeEventListener('touchstart', this.handleTouchStart);
+    this.root.removeEventListener('touchmove', this.handleTouchMove);
   }
 
   throttledHandleWheel = (event) => {
@@ -106,20 +102,20 @@ class Scroller extends Component {
   render() {
     const { containerWidth, className, thumbnails, children } = this.props;
     const scrollerWidth = thumbnails.reduce(thumbnailWidthReducer, 0);
-    console.log('scrollerWidth', scrollerWidth)
+
     return (
       <div
-        ref={e => { this.root = e; }}
+        ref={(e) => { this.root = e; }}
         className={className}
         style={{ width: containerWidth }}
       >
         <div
-          className='scroller'
+          className='scroller center-flex'
           style={{
             [transformProperty.js]: `translate3d(${this.state.scrollerTranslateX}px, 0, 0)`,
             width: scrollerWidth
           }}
-          ref={e => {this.el = e;}}
+          ref={(e) => { this.el = e; }}
         >
           {children}
         </div>
